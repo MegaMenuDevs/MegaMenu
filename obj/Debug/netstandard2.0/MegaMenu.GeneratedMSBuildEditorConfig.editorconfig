@@ -1,0 +1,5 @@
+is_global = true
+build_property.RootNamespace = MegaMenu
+build_property.ProjectDir = /workspaces/MegaMenu/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 

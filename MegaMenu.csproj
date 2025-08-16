@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Megamenu</AssemblyName>
+    <Description>A mod for Among Us</Description>
+    <Version>1.0.0</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- These references correctly point to your local "Libs" folder -->
+    <Reference Include="UnityEngine">
+      <HintPath>Libs\UnityEngine.dll</HintPath>
+      <Private>false</Private> <!-- Add this line -->
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>Libs\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private> <!-- Add this line -->
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>Libs\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>false</Private> <!-- Add this line -->
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>Libs\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private> <!-- Add this line -->
+    </Reference>
+    <Reference Include="BepInEx">
+      <HintPath>Libs\BepInEx.dll</HintPath>
+      <Private>false</Private> <!-- Add this line -->
+    </Reference>
+  </ItemGroup>
+
+  <!-- The duplicate ItemGroup that was here has been REMOVED -->
+
+</Project>
