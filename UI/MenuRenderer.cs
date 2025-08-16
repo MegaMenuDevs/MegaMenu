@@ -12,8 +12,6 @@ namespace Megamenu.UI
 
         void Awake()
         {
-            DontDestroyOnLoad(gameObject);
-            
             _windows = MenuDefinition.GetMenuWindows();
         }
 
@@ -34,7 +32,16 @@ namespace Megamenu.UI
 
             for (int i = 0; i < _windows.Count; i++)
             {
-                _windows[i].WindowRect = GUILayout.Window(_windows[i].Id, _windows[i].WindowRect, DrawWindowContents, _windows[i].Title);
+                // --- THIS IS THE FINAL FIX ---
+                // We use a lambda expression `(id) => { ... }` to explicitly define the
+                // window function. This resolves the IL2CPP compiler ambiguity.
+                _windows[i].WindowRect = GUI.Window(
+                    _windows[i].Id,
+                    _windows[i].WindowRect,
+                    (GUI.WindowFunction)((int id) => DrawWindowContents(id)), // The lambda expression
+                    _windows[i].Title
+                );
+                // --- END OF FIX ---
             }
         }
 
@@ -43,58 +50,23 @@ namespace Megamenu.UI
             MenuWindow window = _windows.FirstOrDefault(w => w.Id == id);
             if (window == null) return;
 
-            window.ScrollPosition = GUILayout.BeginScrollView(window.ScrollPosition, GUI.skin.box);
-
-            foreach (var toggle in window.Toggles)
+            GUILayout.BeginScrollView(window.ScrollPosition, GUI.skin.box);
+            
+            foreach (var action in window.Actions)
             {
-                DrawToggle(toggle);
+                DrawButton(action);
             }
-
-            if (window.Toggles.Any() && window.Submenus.Any())
-            {
-                GUILayout.Space(10);
-            }
-
-            foreach (var submenu in window.Submenus)
-            {
-                DrawSubmenu(submenu);
-            }
-
             GUILayout.EndScrollView();
+
+            // Make the window draggable
+            GUI.DragWindow();
         }
 
-        private void DrawToggle(ToggleItem item)
+        private void DrawButton(ActionItem item)
         {
-            bool newState = GUILayout.Toggle(item.IsOn, " " + item.Label);
-            if (newState != item.IsOn)
+            if (GUILayout.Button(item.Label))
             {
-                item.IsOn = newState;
-                item.OnToggled?.Invoke(newState);
-            }
-
-            if (item.IsOn)
-            {
-                Rect toggleRect = GUILayoutUtility.GetLastRect();
-                GUI.Box(new Rect(toggleRect.x + 5, toggleRect.y + 4, 4, toggleRect.height - 8), GUIContent.none, MegamenuStyles.GetStyle("Indicator"));
-            }
-        }
-
-        private void DrawSubmenu(Submenu submenu)
-        {
-            string expander = submenu.IsExpanded ? "▼ " : "► ";
-            if (GUILayout.Button(expander + submenu.Title, MegamenuStyles.GetStyle("SubmenuHeader")))
-            {
-                submenu.IsExpanded = !submenu.IsExpanded;
-            }
-
-            if (submenu.IsExpanded)
-            {
-                GUILayout.BeginVertical(GUI.skin.box);
-                foreach (var toggle in submenu.Toggles)
-                {
-                    DrawToggle(toggle);
-                }
-                GUILayout.EndVertical();
+                item.OnPressed?.Invoke();
             }
         }
     }

@@ -1,6 +1,0 @@
-/workspaces/MegaMenu/obj/Debug/netstandard2.0/MegaMenu.csproj.AssemblyReference.cache
-/workspaces/MegaMenu/obj/Debug/netstandard2.0/MegaMenu.GeneratedMSBuildEditorConfig.editorconfig
-/workspaces/MegaMenu/obj/Debug/netstandard2.0/MegaMenu.AssemblyInfoInputs.cache
-/workspaces/MegaMenu/obj/Debug/netstandard2.0/MegaMenu.AssemblyInfo.cs
-/workspaces/MegaMenu/obj/Debug/netstandard2.0/MegaMenu.csproj.CoreCompileInputs.cache
-/workspaces/MegaMenu/obj/Debug/netstandard2.0/MegaMenu.sourcelink.json

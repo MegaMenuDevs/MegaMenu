@@ -13,64 +13,28 @@ namespace Megamenu.UI
 
             MenuSkin = ScriptableObject.CreateInstance<GUISkin>();
 
+            // Main Window Style
             MenuSkin.window.normal.background = CreateTexture(new Color(0.1f, 0.1f, 0.1f, 0.95f));
             MenuSkin.window.onNormal.background = MenuSkin.window.normal.background;
-            MenuSkin.window.border = new RectOffset(4, 4, 4, 4);
+            // --- FIX 1 ---
+            MenuSkin.window.border = new RectOffset { left = 4, right = 4, top = 4, bottom = 4 };
 
-            GUIStyle headerStyle = new GUIStyle
-            {
-                fontSize = 14,
-                fontStyle = FontStyle.Bold,
-                alignment = TextAnchor.MiddleCenter,
-                fixedHeight = 30,
-                normal = { textColor = Color.white }
-            };
-            MenuSkin.window.title = headerStyle;
+            // --- FIX 2 ---
+            // We modify the existing window style instead of assigning to .title
+            MenuSkin.window.fontSize = 14;
+            MenuSkin.window.fontStyle = FontStyle.Bold;
+            MenuSkin.window.alignment = TextAnchor.MiddleCenter;
+            MenuSkin.window.fixedHeight = 30;
+            MenuSkin.window.normal.textColor = Color.white;
 
+            // Content Area Style
             MenuSkin.box.normal.background = CreateTexture(new Color(0.15f, 0.15f, 0.15f, 0.95f));
-            MenuSkin.box.padding = new RectOffset(10, 10, 10, 10);
+            // --- FIX 3 ---
+            MenuSkin.box.padding = new RectOffset { left = 10, right = 10, top = 10, bottom = 10 };
             
-            MenuSkin.toggle = new GUIStyle(GUI.skin.toggle)
-            {
-                fontSize = 12,
-                alignment = TextAnchor.MiddleLeft,
-                padding = new RectOffset(20, 0, 0, 0), // Indent text for indicator
-                fixedHeight = 22,
-                normal = { textColor = new Color(0.9f, 0.9f, 0.9f) },
-                onNormal = { textColor = Color.white },
-                hover = { textColor = Color.white },
-                onHover = { textColor = Color.white },
-                active = { textColor = Color.white },
-                onActive = { textColor = Color.white }
-            };
-            
-            MenuSkin.customStyles = new GUIStyle[]
-            {
-                new GUIStyle { normal = { background = CreateTexture(new Color(0.2f, 0.7f, 1f)) } },
-                
-                new GUIStyle(GUI.skin.button)
-                {
-                    alignment = TextAnchor.MiddleLeft,
-                    fontStyle = FontStyle.Bold,
-                    fontSize = 12,
-                    fixedHeight = 22,
-                    normal = { textColor = new Color(0.8f, 0.8f, 0.8f), background = CreateTexture(new Color(0.25f, 0.25f, 0.25f)) },
-                    hover = { textColor = Color.white, background = CreateTexture(new Color(0.3f, 0.3f, 0.3f)) },
-                    active = { textColor = Color.white }
-                }
-            };
-
-            IsInitialized = true;
-        }
-
-        public static GUIStyle GetStyle(string name)
-        {
-            switch (name)
-            {
-                case "Indicator": return MenuSkin.customStyles[0];
-                case "SubmenuHeader": return MenuSkin.customStyles[1];
-                default: return GUI.skin.label;
-            }
+            // Toggle/Button styles are unchanged and work fine
+            // We just need a default button style for our action item
+            MenuSkin.button = new GUIStyle(GUI.skin.button) { fixedHeight = 22 };
         }
 
         private static Texture2D CreateTexture(Color color)
