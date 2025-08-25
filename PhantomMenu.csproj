@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <AssemblyName>KrazyKleb.Megamenu</AssemblyName>
+    <AssemblyName>KrazyKleb.Phantommenu</AssemblyName>
     <Description>A mod for Among Us</Description>
     <Version>1.0.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
